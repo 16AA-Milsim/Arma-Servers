@@ -1,8 +1,8 @@
 // GENERAL SETTINGS
 maxPlayers     = 128;               // Maximum amount of players, including headless clients. Anybody who joins the server is considered a player, regardless of their role or team.
 persistent     = 0;                 // If set to 1, missions will continue to run after all players have disconnected; required if you want to use the -autoInit startup parameter
-requiredBuild  = 133741;			// From 1.60 Patchlog: requiredBuild=xxxxx; in server.cfg preventing obsolete clients to connect. Since 95691 the required version is limited to the server version.
-forceRotorLibSimulation = 0;		// Enforces the Advanced Flight Model on the server. Default = 0 (up to the player). 1 - forced AFM, 2 - forced SFM.
+requiredBuild  = 133741;            // From 1.60 Patchlog: requiredBuild=xxxxx; in server.cfg preventing obsolete clients to connect. Since 95691 the required version is limited to the server version.
+forceRotorLibSimulation = 0;        // Enforces the Advanced Flight Model on the server. Default = 0 (up to the player). 1 - forced AFM, 2 - forced SFM.
 forcedDifficulty = "Custom";        // Force difficulty
 steamProtocolMaxDataSize = 10000;   // Max size of data sent to steam. Default 10000. Increase if you have a lot of mods and are getting steam errors.
 // missionsToServerRestart = 1;     // Restart the server after every mission
