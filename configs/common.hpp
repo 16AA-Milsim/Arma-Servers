@@ -5,7 +5,7 @@ requiredBuild  = 133741;			// From 1.60 Patchlog: requiredBuild=xxxxx; in server
 forceRotorLibSimulation = 0;		// Enforces the Advanced Flight Model on the server. Default = 0 (up to the player). 1 - forced AFM, 2 - forced SFM.
 forcedDifficulty = "Custom";        // Force difficulty
 steamProtocolMaxDataSize = 10000;   // Max size of data sent to steam. Default 10000. Increase if you have a lot of mods and are getting steam errors.
-// missionsToServerRestart = 1;        // Restart the server after every mission
+// missionsToServerRestart = 1;     // Restart the server after every mission
 
 // VOICE CHAT
 disableVoN       = 1;   // If set to 1, voice chat will be disabled
@@ -40,17 +40,17 @@ debriefingTimeOut = -1;
 lobbyIdleTimeout = -1;
 kickTimeout[] = {{0, 1}, {1, 1}, {2, 1}, {3, 1}};
 
-disconnectTimeout = 15;                         //Time to wait before disconnecting a user which temporarily lost connection. Range is 5 to 90 seconds.
-maxDesync = 200;                                //Max desync value until server kick the user
-maxPing= 500;                                   //Max ping value until server kick the user
-maxPacketLoss= 50;                              //Max packetloss value until server kick the user
-kickClientsOnSlowNetwork[] = {1,1,1,1};     //Defines if {<MaxPing>, <MaxPacketLoss>, <MaxDesync>, <DisconnectTimeout>} will be logged (0) or kicked (1)
-logFile = "server_console.log";                 //Saves the output of the server console window itself, useful
+disconnectTimeout = 15;                    //Time to wait before disconnecting a user which temporarily lost connection. Range is 5 to 90 seconds.
+maxDesync = 200;                           //Max desync value until server kick the user
+maxPing= 500;                              //Max ping value until server kick the user
+maxPacketLoss= 50;                         //Max packetloss value until server kick the user
+kickClientsOnSlowNetwork[] = {1,1,1,1};    //Defines if {<MaxPing>, <MaxPacketLoss>, <MaxDesync>, <DisconnectTimeout>} will be logged (0) or kicked (1)
+logFile = "server_console.log";            //Saves the output of the server console window itself, useful
 
 class AdvancedOptions
 {
-    LogObjectNotFound = false; // (default true, logging enabled)
-    SkipDescriptionParsing = false; // (default false, parse description.ext)
-    ignoreMissionLoadErrors = false;
-    queueSizeLogG = 1000000;
+    LogObjectNotFound = false;        // (default true, logging enabled)
+    SkipDescriptionParsing = false;   // (default false, parse description.ext)
+    ignoreMissionLoadErrors = false;  // (default false, Mission will load no matter errors)
+    queueSizeLogG = 1000000;          // (default 1000000, if `#monitor` is running dumps messages from player if over queue size)
 };
