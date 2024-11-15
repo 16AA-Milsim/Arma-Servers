@@ -17,11 +17,11 @@ vonCodecQuality  = 3;   // Supports range 1-30; 1-10 is 8kHz (narrowband), 11-20
 motdInterval = 3;    // Number of seconds between each message
 
 // SECURITY
-BattlEye          = 0;    // If set to 1, BattlEye Anti-Cheat will be enabled on the server (default: 1, recommended: 1)
-verifySignatures  = 0;    // If set to 2, players with unknown or unsigned mods won't be allowed join (default: 0, recommended: 2)
-kickDuplicate     = 1;    // If set to 1, players with an ID that is identical to another player will be kicked (recommended: 1)
-upnp = 0;	              // Automatically creates port mapping on UPNP/IGD enabled router. This option allows you to create a server behind NAT (your router must have public IP and support UPNP/IGD protocol)
-allowedFilePatching = 1;  //Prevent or allow file patching for the clients (including the HC) (since Arma 3 1.49+)  (0 is no clients (default),1 is Headless Clients only, 2 is all clients)
+BattlEye            = 0;    // If set to 1, BattlEye Anti-Cheat will be enabled on the server (default: 1, recommended: 1)
+verifySignatures    = 0;    // If set to 2, players with unknown or unsigned mods won't be allowed join (default: 0, recommended: 2)
+kickDuplicate       = 1;    // If set to 1, players with an ID that is identical to another player will be kicked (recommended: 1)
+upnp                = 0;    // Automatically creates port mapping on UPNP/IGD enabled router. This option allows you to create a server behind NAT (your router must have public IP and support UPNP/IGD protocol)
+allowedFilePatching = 1;    //Prevent or allow file patching for the clients (including the HC) (since Arma 3 1.49+)  (0 is no clients (default),1 is Headless Clients only, 2 is all clients)
 
 // EVENT SCRIPTS (see http://community.bistudio.com/wiki/ArmA:_Server_Side_Scripting)
 onUserConnected     = "";    // command to run when a player connects
