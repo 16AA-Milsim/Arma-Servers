@@ -15,12 +15,12 @@ force l6AA_axe_setting_maxTime = 40;
 force l6AA_axe_setting_timeFactor = 1;
 
 // 16AA - Drop Zone Flashes
-force l6AA_dzf_13aasr_group = "'4-3'";
-force l6AA_dzf_16csmr_group = "'4-4'";
-force l6AA_dzf_1plt_group = "'1 Plt HQ','1-1','1-2','1-3'";
+force l6AA_dzf_13aasr_group = "";
+force l6AA_dzf_16csmr_group = "";
+force l6AA_dzf_1plt_group = "";
 force l6AA_dzf_2plt_group = "'2 Plt HQ','2-1','2-2','2-3'";
-force l6AA_dzf_3plt_group = "'FSG HQ','FSG'";
-force l6AA_dzf_4plt_group = "'CSM Grp','4-1'";
+force l6AA_dzf_3plt_group = "'1 Plt HQ','1-1','1-2','1-3'";
+force l6AA_dzf_4plt_group = "'4 Plt HQ','CSM Grp','FSG','4-1','4-2','4-3','4-4";
 force l6AA_dzf_hq_group = "'Coy HQ'";
 force l6AA_dzf_itc_group = "'ITC'";
 force l6AA_dzf_jfist_group = "'7-0'";
