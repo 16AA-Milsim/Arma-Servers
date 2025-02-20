@@ -42,7 +42,10 @@ activeKeys[]=
 	"BIS_[ITC]HR_Base.cfb_moosehead_done",
 	"BIS_MissionFramework_25MAR2023-v2.Altis_done",
 	"BIS_[ITC]HR_Base_V1.cfb_moosehead_done",
-	"BIS_[16AA-TRN]PhoenixStorm_V3.Altis_done"
+	"BIS_[16AA-TRN]PhoenixStorm_V3.Altis_done",
+	"BIS_[16AA-TRN]PhoenixStorm_HR2_v2.Altis_done",
+	"BIS_[16AA-TRN]PhoenixStorm_HR3_v1.Altis_done",
+	"BIS_[16AA-TRN]7RHA-Training.Altis_done"
 };
 playedKeys[]=
 {

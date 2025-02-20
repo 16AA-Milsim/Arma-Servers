@@ -108,7 +108,8 @@ activeKeys[]=
 	"BIS_[16AA-OPR]Freebird_IV.Cam_Lao_Nam_done",
 	"BIS_[16AA-OPR]Freebird_V.Cam_Lao_Nam_done",
 	"BIS_[16AA-OPR]Freebird_VI.Cam_Lao_Nam_done",
-	"BIS_[16AA-OPR]Freebird_VII.Cam_Lao_Nam_done"
+	"BIS_[16AA-OPR]Freebird_VII.Cam_Lao_Nam_done",
+	"BIS_[16AA-OPR]PhoenixStorm_I_V5.Altis_done"
 };
 sceneComplexity=400000;
 shadowZDistance=100;
