@@ -1309,7 +1309,7 @@ force force kat_breathing_SpO2_cardiacValue = 70;
 force force kat_breathing_SpO2_dieActive = true;
 force force kat_breathing_SpO2_dieValue = 55;
 force force kat_breathing_SpO2_MultiplyNegative = 1;
-force force kat_breathing_SpO2_MultiplyPositive = 1;
+force force kat_breathing_SpO2_MultiplyPositive = 1.2;
 force force kat_breathing_SpO2_perfusion = true;
 force force kat_breathing_SpO2_PerfusionMultiplier = 1.2;
 force force kat_breathing_SpO2_unconscious = 79;
@@ -1388,7 +1388,7 @@ force force kat_circulation_treatmentTime_StethHR = 3;
 force force kat_circulation_useLocation_AED = 0;
 
 // KAT - ADV Medical: Feedback
-force force kat_feedback_effectLowSpO2 = 93;
+force force kat_feedback_effectLowSpO2 = 90;
 force force kat_feedback_enableOpioidEffect = true;
 
 // KAT - ADV Medical: GUI
