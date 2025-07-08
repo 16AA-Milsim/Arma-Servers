@@ -955,11 +955,7 @@ force force ACM_breathing_allowInspectChest = 0;
 force force ACM_breathing_allowNCD = 1;
 force force ACM_breathing_allowThoracostomy = 2;
 force force ACM_breathing_altitudeAffectOxygen = false;
-<<<<<<< HEAD
-force force ACM_breathing_chestInjuryChance = 0.5;
-=======
 force force ACM_breathing_chestInjuryChance = 0.3;
->>>>>>> cd0c19e67b530cf6d0b534e7d8c4a8a40da1b13e
 force force ACM_breathing_Hardcore_ChestInjury = false;
 force force ACM_breathing_Hardcore_HemothoraxBleeding = false;
 force force ACM_breathing_hemothoraxChance = 0.2;
