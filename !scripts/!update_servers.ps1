@@ -11,7 +11,7 @@ Get-Content -Path $secretsFilePath | ForEach-Object {
 # Define the variables
 $STEAMLOGIN = $secrets["STEAM_USERNAME"], $secrets["STEAM_PASSWORD"]
 $STEAMPATH = Join-Path -Path $PSScriptRoot -ChildPath "SteamCMD\steamcmd.exe"
-$A3serverBRANCH = "233780 -beta"
+$A3serverBRANCH = "233780"
 $A3serverBRANCH_PROF = "233780 -beta profiling"
 # get path of server_main folder
 $MainServerPath = Join-Path -Path $PSScriptRoot -ChildPath "..\server_main"

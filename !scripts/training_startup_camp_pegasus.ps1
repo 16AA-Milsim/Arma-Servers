@@ -14,8 +14,20 @@ $MpMissionsPath = Join-Path -Path $ParentPath -ChildPath "server_training\mpmiss
 $ExePath = Join-Path -Path $ParentPath -ChildPath "server_training\arma3serverprofiling_x64.exe"
 
 # Find the latest version of the mission
-$LatestMissionFile = Get-ChildItem -Path $MpMissionsPath -Filter "[ITC]Universal_Training_Grounds_V*.cfb_moosehead.pbo" |
-    Sort-Object { [int]($_.BaseName -replace '[^\d]', '') } -Descending |
+$LatestMissionFile = Get-ChildItem -Path $MpMissionsPath -Filter "[16AA]Universal_Training_Grounds_V*.cfb_moosehead.pbo" |
+    Sort-Object {
+        # Debug: show what name it's parsing
+        Write-Host "Parsing: $($_.BaseName)"
+        
+        if ($_.BaseName -match '_V(\d+)\.cfb') {
+            $version = [int]$matches[1]
+            Write-Host " → Extracted version: $version"
+            return $version
+        } else {
+            Write-Host " → No match, returning 0"
+            return 0
+        }
+    } -Descending |
     Select-Object -First 1
 
 if ($LatestMissionFile) {
