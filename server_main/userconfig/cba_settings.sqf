@@ -62,16 +62,16 @@ force force ace_advanced_ballistics_muzzleVelocityVariationEnabled = true;
 force force ace_advanced_ballistics_simulationInterval = 0.2;
 
 // ACE Advanced Fatigue
-force force ace_advanced_fatigue_deployedSwayFactor = 0.4;
+force force ace_advanced_fatigue_deployedSwayFactor = 0.5;
 force force ace_advanced_fatigue_enabled = true;
 force force ace_advanced_fatigue_enableStaminaBar = true;
 force force ace_advanced_fatigue_fadeStaminaBar = true;
 force force ace_advanced_fatigue_loadFactor = 0.3;
-force force ace_advanced_fatigue_performanceFactor = 1.7;
-force force ace_advanced_fatigue_recoveryFactor = 2.5;
+force force ace_advanced_fatigue_performanceFactor = 1.4;
+force force ace_advanced_fatigue_recoveryFactor = 1.6;
 force force ace_advanced_fatigue_restedSwayFactor = 1;
-force force ace_advanced_fatigue_swayFactor = 0.3;
-force force ace_advanced_fatigue_terrainGradientFactor = 0.3;
+force force ace_advanced_fatigue_swayFactor = 0.5;
+force force ace_advanced_fatigue_terrainGradientFactor = 0.5;
 
 // ACE Advanced Throwing
 force force ace_advanced_throwing_enabled = true;
@@ -1314,7 +1314,7 @@ force force grad_trenches_functions_allowVehicleEnvelope = true;
 force force grad_trenches_functions_bigEnvelopeDamageMultiplier = 2;
 force force grad_trenches_functions_bigEnvelopeDigTime = 80;
 force force grad_trenches_functions_bigEnvelopeRemovalTime = -1;
-force force grad_trenches_functions_buildFatigueFactor = 0;
+force force grad_trenches_functions_buildFatigueFactor = 0.5;
 force force grad_trenches_functions_camouflageRequireEntrenchmentTool = true;
 force force grad_trenches_functions_createTrenchMarker = false;
 force force grad_trenches_functions_decayTime = 1000;
