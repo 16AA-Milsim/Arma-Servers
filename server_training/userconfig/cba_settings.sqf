@@ -124,7 +124,11 @@ force force ace_casings_maxCasings = 100;
 force ace_common_allowFadeMusic = true;
 force force ace_common_checkPBOsAction = 2;
 force force ace_common_checkPBOsCheckAll = true;
+<<<<<<< HEAD
 force force ace_common_checkPBOsWhitelist = "['Blastcore_VEP','Blastcore_MainCore','Ca','jsrs_soundmod_complete_edition','jsrs_soundmod_framework','jsrs_soundmod_cfg_rhs_usf_weapons','fxp_VehExpEffectBig','WarFXPE_Weps','jsrs_soundmod_movement','jsrs_soundmod_16aa','fxp_VehHeli','PLP_hidePasswords','jsrs_soundmod_rhs_gref_weapons','fxp_VehTank','jsrs_soundmod_explosions','WarFXPE','jsrs_soundmod_rhs_afrf_weapons','fxp_VehPlane','jsrs_soundmod_cfg_rhs_afrf_weapons','jsrs_soundmod_cfg_rhs_afrf_air_vehicles','jsrs_soundmod_environment','A3TI','fxp_adat','jsrs_soundmod_complete_edition_soundfiles','fxp_VehExpEffect','PLP_commonModData','jsrs_soundmod_weapons','blast_refract','jsrs_soundmod_sonic_cracks','jsrs_soundmod_boats','jsrs_soundmod_cfg_rhs_usf_vehicles','jsrs_soundmod_helicopters','jsrs_soundmod_landvehicles','jsrs_soundmod_rhs_usf_weapons','grcb_jsrs_cup_weapons','jsrs_soundmod_bullethits','jsrs_soundmod_cfg_rhs_usf_air_vehicles','jsrs_soundmod_cfg_rhs_afrf_vehicles','OCAP_main','OCAP_extension','OCAP_recorder','dedmen_arma_script_profiler','dedmen_sqf_assembly','Intercept_Core']";
+=======
+force force ace_common_checkPBOsWhitelist = "['fxp_adat','jsrs_soundmod_16aa','WarFXPE','jsrs_soundmod_rhs_gref_weapons','jsrs_soundmod_cfg_rhs_usf_vehicles','Blastcore_MainCore','PLP_commonModData','blast_refract','jsrs_soundmod_cfg_rhs_usf_air_vehicles','jsrs_soundmod_cfg_rhs_afrf_vehicles','jsrs_soundmod_cfg_rhs_afrf_air_vehicles','A3TI','jsrs_soundmod_rhs_usf_weapons','jsrs_soundmod_complete_edition','jsrs_soundmod_movement','fxp_VehExpEffectBig','Ca','jsrs_soundmod_framework','jsrs_soundmod_helicopters','fxp_VehPlane','fxp_VehTank','Blastcore_VEP','WarFXPE_Weps','jsrs_soundmod_weapons','jsrs_soundmod_bullethits','jsrs_soundmod_sonic_cracks','jsrs_soundmod_cfg_rhs_usf_weapons','jsrs_soundmod_complete_edition_soundfiles','fxp_VehHeli','PLP_hidePasswords','jsrs_soundmod_environment','jsrs_soundmod_boats','jsrs_soundmod_rhs_afrf_weapons','fxp_VehExpEffect','jsrs_soundmod_landvehicles','jsrs_soundmod_cfg_rhs_afrf_weapons','jsrs_soundmod_explosions','OCAP_main','OCAP_extension','OCAP_recorder','dedmen_arma_script_profiler','dedmen_sqf_assembly','Intercept_Core']";
+>>>>>>> cd0c19e67b530cf6d0b534e7d8c4a8a40da1b13e
 ace_common_displayTextColor = [0,0,0,0.1];
 ace_common_displayTextFontColor = [1,1,1,1];
 ace_common_epilepsyFriendlyMode = false;
@@ -951,7 +955,11 @@ force force ACM_breathing_allowInspectChest = 0;
 force force ACM_breathing_allowNCD = 1;
 force force ACM_breathing_allowThoracostomy = 2;
 force force ACM_breathing_altitudeAffectOxygen = false;
+<<<<<<< HEAD
 force force ACM_breathing_chestInjuryChance = 0.5;
+=======
+force force ACM_breathing_chestInjuryChance = 0.3;
+>>>>>>> cd0c19e67b530cf6d0b534e7d8c4a8a40da1b13e
 force force ACM_breathing_Hardcore_ChestInjury = false;
 force force ACM_breathing_Hardcore_HemothoraxBleeding = false;
 force force ACM_breathing_hemothoraxChance = 0.2;
@@ -1309,7 +1317,7 @@ force force grad_trenches_functions_allowLongEnvelope = true;
 force force grad_trenches_functions_allowShortEnvelope = true;
 force force grad_trenches_functions_allowSmallEnvelope = true;
 force force grad_trenches_functions_allowTextureLock = true;
-force force grad_trenches_functions_allowTrenchDecay = false;
+force force grad_trenches_functions_allowTrenchDecay = true;
 force force grad_trenches_functions_allowVehicleEnvelope = true;
 force force grad_trenches_functions_bigEnvelopeDamageMultiplier = 2;
 force force grad_trenches_functions_bigEnvelopeDigTime = 80;
