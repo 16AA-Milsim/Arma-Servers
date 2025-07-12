@@ -67,11 +67,11 @@ force force ace_advanced_fatigue_enabled = true;
 force force ace_advanced_fatigue_enableStaminaBar = true;
 force force ace_advanced_fatigue_fadeStaminaBar = true;
 force force ace_advanced_fatigue_loadFactor = 0;
-force force ace_advanced_fatigue_performanceFactor = 2.5396;
-force force ace_advanced_fatigue_recoveryFactor = 5;
+force force ace_advanced_fatigue_performanceFactor = 2;
+force force ace_advanced_fatigue_recoveryFactor = 2;
 force force ace_advanced_fatigue_restedSwayFactor = 1;
-force force ace_advanced_fatigue_swayFactor = 0;
-force force ace_advanced_fatigue_terrainGradientFactor = 0;
+force force ace_advanced_fatigue_swayFactor = 0.2;
+force force ace_advanced_fatigue_terrainGradientFactor = 0.2;
 
 // ACE Advanced Throwing
 force force ace_advanced_throwing_enabled = true;
@@ -1423,7 +1423,7 @@ force force OCAP_settings_minPlayerCount = 10;
 force force OCAP_settings_preferACEUnconscious = true;
 force force OCAP_settings_saveMissionEnded = true;
 force force OCAP_settings_saveOnEmpty = true;
-force force OCAP_settings_saveTag = "OP";
+force force OCAP_settings_saveTag = "Training";
 force force OCAP_settings_trackTickets = true;
 force force OCAP_settings_trackTimeInterval = 15;
 force force OCAP_settings_trackTimes = true;
