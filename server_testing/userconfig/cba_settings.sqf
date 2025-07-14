@@ -15,31 +15,17 @@ force l6AA_axe_setting_maxTime = 40;
 force l6AA_axe_setting_timeFactor = 1;
 
 // 16AA - Drop Zone Flashes
-force force l6AA_dzf_13aasr_group = "'4-3'";
-force force l6AA_dzf_13aasr_set = "16aa_l_13aasr_dzf";
-force force l6AA_dzf_16csmr_group = "'4-4'";
-force force l6AA_dzf_16csmr_set = "16aa_l_16csmr_dzf";
-force force l6AA_dzf_1plt_group = "'1 Plt HQ','1-1','1-2','1-3'";
-force force l6AA_dzf_1plt_set = "16aa_l_1pl_dzf";
-force force l6AA_dzf_2plt_group = "'2 Plt HQ','2-1','2-2','2-3'";
-force force l6AA_dzf_2plt_set = "16aa_l_2pl_dzf";
-force force l6AA_dzf_3plt_group = "'FSG HQ','FSG'";
-force force l6AA_dzf_3plt_set = "16aa_l_3pl_dzf";
-force force l6AA_dzf_4plt_group = "'CSM Grp','4-1'";
-force force l6AA_dzf_4plt_set = "16aa_l_4pl_dzf";
-force force l6AA_dzf_7rha_group = "'7RHA'";
-force force l6AA_dzf_7rha_set = "16aa_l_7rha_dzf";
-force force l6AA_dzf_default_set = "16aa_s_eagle_gsub";
-force force l6AA_dzf_hq_group = "'Coy HQ'";
-force force l6AA_dzf_hq_set = "16aa_l_hq_dzf";
-force force l6AA_dzf_itc_group = "'ITC','P1-Instr'";
-force force l6AA_dzf_itc_set = "16aa_l_itc_dzf";
-force force l6AA_dzf_jfist_group = "'7-0','1 Plt HQ'";
-force force l6AA_dzf_jfist_set = "16aa_l_jfist_dzf";
-force force l6AA_dzf_jhc_group = "'JHC'";
-force force l6AA_dzf_jhc_set = "16aa_l_jhc_dzf";
-force force l6AA_dzf_mi_group = "'MI'";
-force force l6AA_dzf_mi_set = "16aa_l_mi_dzf";
+force l6AA_dzf_13aasr_group = "";
+force l6AA_dzf_16csmr_group = "";
+force l6AA_dzf_1plt_group = "";
+force l6AA_dzf_2plt_group = "'2 Plt HQ','2-1','2-2','2-3'";
+force l6AA_dzf_3plt_group = "'1 Plt HQ','1-1','1-2','1-3'";
+force l6AA_dzf_4plt_group = "'4 Plt HQ','CSM Grp','FSG','3-1','4-1','4-2','4-3','4-4'";
+force l6AA_dzf_hq_group = "'Coy HQ'";
+force l6AA_dzf_itc_group = "'ITC'";
+force l6AA_dzf_jfist_group = "'7-0'";
+force l6AA_dzf_jhc_group = "'JHC'";
+force l6AA_dzf_mi_group = "'MI'";
 
 // A3TI
 force A3TI_ACE_JAVELIN = true;
@@ -253,8 +239,8 @@ ace_interact_menu_menuBackgroundSelf = 0;
 ace_interact_menu_selectorColor = [1,0,0];
 ace_interact_menu_shadowSetting = 2;
 ace_interact_menu_textSize = 2;
-ace_interact_menu_useListMenu = true;
-ace_interact_menu_useListMenuSelf = true;
+force force ace_interact_menu_useListMenu = true;
+force force ace_interact_menu_useListMenuSelf = true;
 
 // ACE Interaction Menu (Self) - More
 ace_interact_menu_more__ACE_CheckAirTemperature = false;
@@ -678,21 +664,21 @@ force force ace_medical_treatment_woundReopenChance = 0.9;
 force force ace_medical_treatment_woundStitchTime = 5;
 
 // ACE Name Tags
-force ace_nametags_ambientBrightnessAffectViewDist = 1;
+force force ace_nametags_ambientBrightnessAffectViewDist = 1;
 ace_nametags_defaultNametagColor = [0.77,0.51,0.08,1];
 ace_nametags_nametagColorBlue = [0.67,0.67,1,1];
 ace_nametags_nametagColorGreen = [0.67,1,0.67,1];
 ace_nametags_nametagColorMain = [1,1,1,1];
 ace_nametags_nametagColorRed = [1,0.67,0.67,1];
 ace_nametags_nametagColorYellow = [1,1,0.67,1];
-force ace_nametags_playerNamesMaxAlpha = 0.8;
-force force ace_nametags_playerNamesViewDistance = 5;
+force force ace_nametags_playerNamesMaxAlpha = 0.8;
+force force ace_nametags_playerNamesViewDistance = 10;
 force force ace_nametags_showCursorTagForVehicles = false;
 force force ace_nametags_showNamesForAI = false;
-ace_nametags_showPlayerNames = 3;
-ace_nametags_showPlayerRanks = true;
-ace_nametags_showSoundWaves = 1;
-ace_nametags_showVehicleCrewInfo = true;
+force force ace_nametags_showPlayerNames = 1;
+force force ace_nametags_showPlayerRanks = true;
+force force ace_nametags_showSoundWaves = 2;
+force force ace_nametags_showVehicleCrewInfo = true;
 ace_nametags_tagSize = 2;
 
 // ACE Nightvision
@@ -1157,16 +1143,16 @@ force force diwako_dui_indicators_style = "standard";
 force force diwako_dui_indicators_useACENametagsRange = true;
 
 // DUI - Squad Radar - Line Compass
-force diwako_dui_linecompass_AllowNumericDrawBearing = true;
+force force diwako_dui_linecompass_AllowNumericDrawBearing = true;
 force force diwako_dui_linecompass_CompassAvailableShown = true;
-diwako_dui_linecompass_compassRange = 35;
-force diwako_dui_linecompass_compassRangeLimit = 50;
+force force diwako_dui_linecompass_compassRange = 35;
+force force diwako_dui_linecompass_compassRangeLimit = 50;
 diwako_dui_linecompass_DrawBearing = 2;
-force diwako_dui_linecompass_Enabled = false;
-force force diwako_dui_linecompass_enableOcclusion = true;
+force force diwako_dui_linecompass_Enabled = false;
+force force diwako_dui_linecompass_enableOcclusion = false;
 diwako_dui_linecompass_IconOutline = 0;
-diwako_dui_linecompass_occlusionFadeSpeed = 3.5;
-diwako_dui_linecompass_showSpeaking = true;
+force force diwako_dui_linecompass_occlusionFadeSpeed = 3.5;
+force force diwako_dui_linecompass_showSpeaking = true;
 diwako_dui_linecompass_SwapOrder = false;
 
 // DUI - Squad Radar - Main
@@ -1193,7 +1179,7 @@ force force diwako_dui_nametags_enabled = false;
 diwako_dui_nametags_enableFOVBoost = true;
 diwako_dui_nametags_enableOcclusion = true;
 diwako_dui_nametags_fadeInTime = 0.05;
-diwako_dui_nametags_fadeOutTime = 0.1;
+diwako_dui_nametags_fadeOutTime = 0.5;
 diwako_dui_nametags_fontGroup = "RobotoCondensedLight";
 diwako_dui_nametags_fontGroupNameSize = 8;
 diwako_dui_nametags_fontName = "RobotoCondensedBold";
@@ -1204,7 +1190,7 @@ diwako_dui_nametags_groupNameOtherGroupColor = [0.6,0.85,0.6,1];
 diwako_dui_nametags_nameFontShadow = 1;
 diwako_dui_nametags_nameOtherGroupColor = [0.2,1,0,1];
 diwako_dui_nametags_rankNameStyle = "default";
-diwako_dui_nametags_renderDistance = 100;
+diwako_dui_nametags_renderDistance = 40;
 diwako_dui_nametags_showUnconAsDead = true;
 diwako_dui_nametags_useLIS = true;
 diwako_dui_nametags_useSideIsFriendly = true;
@@ -1220,9 +1206,9 @@ force force diwako_dui_compassRefreshrate = 0.01;
 diwako_dui_dir_showMildot = false;
 diwako_dui_dir_size = 1.6;
 force force diwako_dui_distanceWarning = 10;
-diwako_dui_enable_compass = true;
+force force diwako_dui_enable_compass = true;
 diwako_dui_enable_compass_dir = 1;
-force force diwako_dui_enable_occlusion = true;
+force force diwako_dui_enable_occlusion = false;
 diwako_dui_enable_occlusion_cone = 360;
 diwako_dui_hudScaling = 1;
 force force diwako_dui_namelist = true;
@@ -1244,8 +1230,8 @@ diwako_dui_radar_icon_scale_crew = 6;
 diwako_dui_radar_leadingZeroes = false;
 diwako_dui_radar_namelist_hideWhenLeader = false;
 diwako_dui_radar_namelist_vertical_spacing = 1;
-force force diwako_dui_radar_occlusion_fade_in_time = 1;
-force force diwako_dui_radar_occlusion_fade_time = 10;
+diwako_dui_radar_occlusion_fade_in_time = 1;
+diwako_dui_radar_occlusion_fade_time = 10;
 diwako_dui_radar_pointer_color = [1,0.5,0,1];
 diwako_dui_radar_pointer_style = "standard";
 force force diwako_dui_radar_show_cardinal_points = true;
