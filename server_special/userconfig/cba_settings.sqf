@@ -773,7 +773,7 @@ force force ace_scopes_zeroReferenceHumidity = 0.5;
 force force ace_scopes_zeroReferenceTemperature = 15;
 
 // ACE Sitting
-force force acex_sitting_enable = false;
+force force acex_sitting_enable = true;
 
 // ACE Spectator
 force ace_spectator_enableAI = false;
