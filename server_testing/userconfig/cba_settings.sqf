@@ -108,7 +108,7 @@ force force ace_casings_maxCasings = 100;
 
 // ACE Common
 force ace_common_allowFadeMusic = true;
-force force ace_common_checkPBOsAction = 2;
+force force ace_common_checkPBOsAction = 0;
 force force ace_common_checkPBOsCheckAll = true;
 force force ace_common_checkPBOsWhitelist = "['Blastcore_VEP','Blastcore_MainCore','Ca','jsrs_soundmod_complete_edition','jsrs_soundmod_framework','jsrs_soundmod_cfg_rhs_usf_weapons','fxp_VehExpEffectBig','WarFXPE_Weps','jsrs_soundmod_movement','jsrs_soundmod_16aa','fxp_VehHeli','PLP_hidePasswords','jsrs_soundmod_rhs_gref_weapons','fxp_VehTank','jsrs_soundmod_explosions','WarFXPE','jsrs_soundmod_rhs_afrf_weapons','fxp_VehPlane','jsrs_soundmod_cfg_rhs_afrf_weapons','jsrs_soundmod_cfg_rhs_afrf_air_vehicles','jsrs_soundmod_environment','A3TI','fxp_adat','jsrs_soundmod_complete_edition_soundfiles','fxp_VehExpEffect','PLP_commonModData','jsrs_soundmod_weapons','blast_refract','jsrs_soundmod_sonic_cracks','jsrs_soundmod_boats','jsrs_soundmod_cfg_rhs_usf_vehicles','jsrs_soundmod_helicopters','jsrs_soundmod_landvehicles','jsrs_soundmod_rhs_usf_weapons','grcb_jsrs_cup_weapons','jsrs_soundmod_bullethits','jsrs_soundmod_cfg_rhs_usf_air_vehicles','jsrs_soundmod_cfg_rhs_afrf_vehicles','dedmen_arma_script_profiler','dedmen_sqf_assembly','Intercept_Core']";
 ace_common_displayTextColor = [0,0,0,0.1];
