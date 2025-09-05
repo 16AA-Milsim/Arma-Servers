@@ -18,7 +18,7 @@ $TestModsPath = "F:\16AA\Arma-Servers\modpacks\testing"
 # List of mods to exclude
 $ExcludedMods = @(
     # "@SomeOtherMod",
-    "@KAT__Advanced_Medical"
+    "@Zulu_Headless_Client_ZHC_","@Advanced_Combat_Medicine"
 )
 
 # Collect and filter mods from both directories

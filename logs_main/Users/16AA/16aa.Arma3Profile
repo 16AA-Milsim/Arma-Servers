@@ -123,7 +123,13 @@ activeKeys[]=
 	"BIS_[16AA-OPR]TridentResolve_VIII.Ivanivokova_done",
 	"BIS_[16AA-OPR]TridentResolve_IX.Ivanivokova_done",
 	"BIS_[16AA-OPR]TridentResolve_X.Ivanivokova_done",
-	"BIS_[16AA-OPR]TridentResolve_XI.Ivanivokova_done"
+	"BIS_[16AA-OPR]TridentResolve_XI.Ivanivokova_done",
+	"BIS_[16AA-OPR]Kingslayer_I.MCN_Aliabad_done",
+	"BIS_[16AA-OPR]Kingslayer_II.tem_anizay_done",
+	"BIS_[16AA-OPR]Kingslayer_III.tem_anizay_done",
+	"BIS_[16AA-OPR]KingslayerIV_v3.Farabad_done",
+	"BIS_[16AA-OPR]KingslayerV.Farabad_done",
+	"BIS_[16AA-OPR]Kingslayer_VI.Farabad_done"
 };
 sceneComplexity=400000;
 shadowZDistance=100;
