@@ -19,7 +19,7 @@ motdInterval = 3;    // Number of seconds between each message
 // SECURITY
 BattlEye          = 0;    // If set to 1, BattlEye Anti-Cheat will be enabled on the server (default: 1, recommended: 1)
 verifySignatures  = 0;    // If set to 2, players with unknown or unsigned mods won't be allowed join (default: 0, recommended: 2)
-kickDuplicate     = 1;    // If set to 1, players with an ID that is identical to another player will be kicked (recommended: 1)
+//kickDuplicate     = 1;    // If set to 1, players with an ID that is identical to another player will be kicked (recommended: 1)
 upnp = 0;	              // Automatically creates port mapping on UPNP/IGD enabled router. This option allows you to create a server behind NAT (your router must have public IP and support UPNP/IGD protocol)
 allowedFilePatching = 1;  //Prevent or allow file patching for the clients (including the HC) (since Arma 3 1.49+)  (0 is no clients (default),1 is Headless Clients only, 2 is all clients)
 
