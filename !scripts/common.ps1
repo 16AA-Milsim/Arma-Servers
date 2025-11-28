@@ -241,3 +241,48 @@ function Resolve-SecretValue {
 
     return $null
 }
+
+function Get-ArmaPasswordFromConfig {
+    param(
+        [Parameter(Mandatory)] [string]$ConfigPath
+    )
+
+    if (-not (Test-Path $ConfigPath)) {
+        return $null
+    }
+
+    foreach ($line in Get-Content -Path $ConfigPath) {
+        $match = [regex]::Match($line, '^\s*password\s*=\s*\"([^\"]+)\"')
+        if ($match.Success) {
+            return $match.Groups[1].Value
+        }
+    }
+
+    return $null
+}
+
+function Resolve-ConnectPassword {
+    param(
+        [Parameter(Mandatory)] [string]$ParentPath,
+        [hashtable]$Secrets,
+        [string]$SecretsPath
+    )
+
+    $Candidates = @(
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords.hpp",
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_main.hpp",
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_testing.hpp",
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_training.hpp"
+    )
+
+    foreach ($cfg in $Candidates) {
+        $pw = Get-ArmaPasswordFromConfig -ConfigPath $cfg
+        if ($pw) {
+            Write-Host "Using join password from $cfg" -ForegroundColor DarkGray
+            return $pw
+        }
+    }
+
+    # Fallback to secrets/env
+    return Resolve-SecretValue -Key "ARMA_CONNECT_PASSWORD" -Secrets $Secrets -SecretsPath $SecretsPath -Mandatory
+}

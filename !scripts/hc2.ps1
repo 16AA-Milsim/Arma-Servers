@@ -37,7 +37,7 @@ try {
 
     $SecretsPath = Join-Path -Path $ScriptRoot -ChildPath "secrets.txt"
     $secrets = Load-SecretsFile -SecretsPath $SecretsPath
-    $JoinPassword = Resolve-SecretValue -Key "ARMA_CONNECT_PASSWORD" -Secrets $secrets -SecretsPath $SecretsPath -Mandatory
+    $JoinPassword = Resolve-ConnectPassword -ParentPath $ParentPath -Secrets $secrets -SecretsPath $SecretsPath
 
     $ParserScript = Join-Path -Path $CommonPaths.ParserRoot -ChildPath "Parser.py"
     $PythonExe    = Get-ParserPython -ParserRoot $CommonPaths.ParserRoot
