@@ -54,5 +54,9 @@ try {
     Start-ArmaServer -ExePath $ExePath -Arguments $Arguments
 }
 catch {
+    Write-Host "ERROR DETAILS (hc2):" -ForegroundColor Red
+    Write-Host ($_ | Out-String)
+    if ($_.InvocationInfo) { Write-Host "Invocation:" $_.InvocationInfo.PositionMessage }
+    if ($_.ScriptStackTrace) { Write-Host "Script stack:" $_.ScriptStackTrace }
     Show-ErrorAndExit $_.Exception.Message
 }
