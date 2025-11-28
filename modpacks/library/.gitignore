@@ -1,0 +1,4 @@
+# Ignore all contents of library; keep the marker files so the folder stays tracked.
+*
+!.gitignore
+!.gitkeep

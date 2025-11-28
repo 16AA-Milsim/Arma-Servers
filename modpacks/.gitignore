@@ -8,3 +8,12 @@
 !/special/.gitkeep
 /testing/*
 !/testing/.gitkeep
+/server-main/*
+!/server-main/.gitkeep
+/server-training/*
+!/server-training/.gitkeep
+/server-testing/*
+!/server-testing/.gitkeep
+/library/*
+!/library/.gitignore
+!/library/.gitkeep

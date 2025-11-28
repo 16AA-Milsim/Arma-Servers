@@ -13,3 +13,5 @@ dll/*
 /!scripts/secrets.txt
 !/!scripts_OLD_BACKUP/
 !/!scripts_OLD_BACKUP/**
+!/modpacks/
+!/modpacks/**
