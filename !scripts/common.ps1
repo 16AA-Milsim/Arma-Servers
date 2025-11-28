@@ -155,6 +155,13 @@ function Rebuild-ModsetLinks {
             Write-Warning "Source mod not found: $src"
             continue
         }
+        if (Test-Path $dest) {
+            $isLink = (Get-Item $dest -ErrorAction SilentlyContinue).Attributes -band [IO.FileAttributes]::ReparsePoint
+            if (-not $isLink) {
+                Write-Warning "Destination exists and is not a symlink, skipping: $dest"
+                continue
+            }
+        }
         Write-Host "Linking $dest -> $src" -ForegroundColor DarkGray
         New-Item -ItemType SymbolicLink -Path $dest -Target $src | Out-Null
     }
