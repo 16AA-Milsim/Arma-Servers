@@ -79,6 +79,40 @@ function Get-EventDefinition {
     }
 }
 
+function Normalize-ModList {
+    param(
+        [Parameter(Mandatory)] $Mods
+    )
+
+    $flat = New-Object System.Collections.Generic.List[string]
+
+    function Add-ModRecursive {
+        param($item)
+
+        if ($null -eq $item) { return }
+
+        # Strings are the terminal case
+        if ($item -is [string]) {
+            $flat.Add($item)
+            return
+        }
+
+        # Enumerables (arrays/lists) need to be flattened
+        if ($item -is [System.Collections.IEnumerable]) {
+            foreach ($child in $item) {
+                Add-ModRecursive $child
+            }
+            return
+        }
+
+        # Fallback to ToString()
+        $flat.Add($item.ToString())
+    }
+
+    Add-ModRecursive $Mods
+    return $flat
+}
+
 function Rebuild-ModsetLinks {
     param(
         [Parameter(Mandatory)] [string]$ModsetPath,
@@ -104,26 +138,11 @@ function Rebuild-ModsetLinks {
         }
     }
 
-    foreach ($mod in $Mods) {
-        if ($null -eq $mod) { continue }
+    $FlatMods = Normalize-ModList -Mods $Mods
+    Write-Host ("Mods to link ({0}):" -f $FlatMods.Count) -ForegroundColor DarkGray
+    $FlatMods | ForEach-Object { Write-Host " - $_" -ForegroundColor DarkGray }
 
-        if ($mod -is [System.Collections.IEnumerable] -and -not ($mod -is [string])) {
-            foreach ($inner in $mod) {
-                if ($inner) {
-                    $normalized = $inner.ToString()
-                    $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
-                    $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
-                    if (-not (Test-Path $src)) {
-                        Write-Warning "Source mod not found: $src"
-                        continue
-                    }
-                    Write-Host "Linking $dest -> $src" -ForegroundColor DarkGray
-                    New-Item -ItemType SymbolicLink -Path $dest -Target $src | Out-Null
-                }
-            }
-            continue
-        }
-
+    foreach ($mod in $FlatMods) {
         $normalized = $mod.ToString()
         $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
         $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
