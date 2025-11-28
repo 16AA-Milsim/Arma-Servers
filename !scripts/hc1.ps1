@@ -39,13 +39,9 @@ try {
     $secrets = Load-SecretsFile -SecretsPath $SecretsPath
     $JoinPassword = Resolve-ConnectPassword -ParentPath $ParentPath -Secrets $secrets -SecretsPath $SecretsPath
 
-    $ParserScript = Join-Path -Path $CommonPaths.ParserRoot -ChildPath "Parser.py"
-    $PythonExe    = Get-ParserPython -ParserRoot $CommonPaths.ParserRoot
-
-    Invoke-EventParser -ParserRoot $CommonPaths.ParserRoot -ParserScript $ParserScript -LibraryA3SPath $CommonPaths.LibraryA3SPath -EventsJsonPath $CommonPaths.EventsJsonPath -PythonExe $PythonExe
-
-    $eventInfo = Get-EventDefinition -EventsJsonPath $CommonPaths.EventsJsonPath -EventName $EventName
-    Rebuild-ModsetLinks -ModsetPath $ModsetPath -Mods $eventInfo.Mods -ModLibraryPath $CommonPaths.ModLibraryPath -EventName $EventName
+    if (-not (Test-Path $ModsetPath)) {
+        throw "ModsetPath does not exist: $ModsetPath. Start the main server first to build symlinks."
+    }
 
     $Mods = Get-ModsetArgument -ModsetPath $ModsetPath
 

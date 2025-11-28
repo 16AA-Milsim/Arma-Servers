@@ -31,7 +31,7 @@ timeout /t 2 /nobreak >nul
 
 echo Starting headless client 1...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_HC1%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
-timeout /t 2 /nobreak >nul
+timeout /t 5 /nobreak >nul
 
 echo Starting headless client 2...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_HC2%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
