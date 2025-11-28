@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-rem Clear symlinks in the testing modset without touching real folders/files
+rem Clear symlinks in the testing modset without touching real folders/files, then start empty
 set "MODSET=modpacks\server-testing"
 
 rem Self-elevate if not admin
@@ -16,6 +16,6 @@ if "%MODSET%"=="" (
     exit /b 1
 )
 
-set SCRIPT=%~dp0clear_modset.ps1
+set SCRIPT=%~dp0testing_no_events.ps1
 
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -ModsetPath "%MODSET%"

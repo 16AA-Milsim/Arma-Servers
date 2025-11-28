@@ -24,12 +24,7 @@ try {
         throw "Could not resolve ParentPath from script root ($ScriptRoot)."
     }
 
-    if (-not [IO.Path]::IsPathRooted($ModsetPath)) {
-        $ModsetPath = Join-Path -Path $ParentPath -ChildPath $ModsetPath
-    }
-    if ([string]::IsNullOrWhiteSpace($ModsetPath) -or ($ModsetPath -notlike "*modpacks*")) {
-        throw "ModsetPath resolved to an unsafe path: '$ModsetPath'"
-    }
+    $ModsetPath = Resolve-ModsetPath -ModsetPath $ModsetPath -ParentPath $ParentPath
 
     $ProfilesPath = Join-Path -Path $ParentPath -ChildPath "logs_main_hc\hc1"
     $ExePath      = Join-Path -Path $ParentPath -ChildPath "server_main_hc\arma3server_x64.exe"
