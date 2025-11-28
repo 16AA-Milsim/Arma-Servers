@@ -8,3 +8,8 @@ userconfig/*
 dll/*
 !dll/mimalloc-v206-lock-pages.dll
 *.pbo
+!/!scripts/
+!/!scripts/**
+/!scripts/secrets.txt
+!/!scripts_OLD_BACKUP/
+!/!scripts_OLD_BACKUP/**

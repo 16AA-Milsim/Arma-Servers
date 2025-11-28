@@ -31,13 +31,12 @@ try {
         throw "ModsetPath resolved to an unsafe path: '$ModsetPath'"
     }
 
-    $ProfilesPath = Join-Path -Path $ParentPath -ChildPath "logs_main_hc\hc2"
-    $ExePath      = Join-Path -Path $ParentPath -ChildPath "server_main_hc\arma3server_x64.exe"
-    $Port         = 2302
-
-    $SecretsPath = Join-Path -Path $ScriptRoot -ChildPath "secrets.txt"
-    $secrets = Load-SecretsFile -SecretsPath $SecretsPath
-    $JoinPassword = Resolve-SecretValue -Key "ARMA_CONNECT_PASSWORD" -Secrets $secrets -SecretsPath $SecretsPath -Mandatory
+    $NetworkConfigPath = Join-Path -Path $ParentPath -ChildPath "configs\network.cfg"
+    $ProfilesPath      = Join-Path -Path $ParentPath -ChildPath "logs_main"
+    $ConfigPath        = Join-Path -Path $ParentPath -ChildPath "configs\main.cfg"
+    $ExePath           = Join-Path -Path $ParentPath -ChildPath "server_main\arma3serverprofiling_x64.exe"
+    $OcapPath          = Join-Path -Path $ParentPath -ChildPath "servermods\@OCAP"
+    $Port              = 2302
 
     $ParserScript = Join-Path -Path $CommonPaths.ParserRoot -ChildPath "Parser.py"
     $PythonExe    = Get-ParserPython -ParserRoot $CommonPaths.ParserRoot
@@ -48,8 +47,8 @@ try {
     Rebuild-ModsetLinks -ModsetPath $ModsetPath -Mods $eventInfo.Mods -ModLibraryPath $CommonPaths.ModLibraryPath -EventName $EventName
 
     $Mods = Get-ModsetArgument -ModsetPath $ModsetPath
-
-    $Arguments = "-client -connect=127.0.0.1 -port=$Port -password=$JoinPassword -profiles=$ProfilesPath -malloc=mimalloc_v206_LockPages -hugepages -maxMem=16000 -limitFPS=500 -enableHT -mod=$Mods"
+    $ServerMods = "$OcapPath"
+    $Arguments = "-config=$ConfigPath -cfg=$NetworkConfigPath -profiles=$ProfilesPath -port=$Port -name=16aa -filePatching -hugepages -maxMem=16000 -malloc=mimalloc_v206_LockPages -enableHT -bandwidthAlg=2 -limitFPS=1000 -loadMissionToMemory -servermod=$ServerMods -mod=$Mods"
 
     Start-ArmaServer -ExePath $ExePath -Arguments $Arguments
 }

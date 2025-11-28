@@ -1,0 +1,243 @@
+# Shared helpers for Arma server startup scripts.
+
+$ErrorActionPreference = "Stop"
+
+$CommonPaths = @{
+    LibraryA3SPath = "F:\16AA\Arma-Servers\modpacks\library\.a3s"
+    EventsJsonPath = "F:\16AA\Arma-Servers\a3s.events.json\events.json"
+    ModLibraryPath = "F:\16AA\Arma-Servers\modpacks\library"
+    ParserRoot     = "F:\16AA\zOther\a3s_to_json"
+}
+
+function Get-ParserPython {
+    param(
+        [Parameter(Mandatory)]
+        [string]$ParserRoot
+    )
+
+    $python = Join-Path -Path $ParserRoot -ChildPath ".venv\Scripts\python.exe"
+    if (Test-Path $python) {
+        return $python
+    }
+
+    return "python"
+}
+
+function Invoke-EventParser {
+    param(
+        [Parameter(Mandatory)] [string]$ParserRoot,
+        [Parameter(Mandatory)] [string]$ParserScript,
+        [Parameter(Mandatory)] [string]$LibraryA3SPath,
+        [Parameter(Mandatory)] [string]$EventsJsonPath,
+        [Parameter(Mandatory)] [string]$PythonExe
+    )
+
+    $eventsDir = Split-Path -Path $EventsJsonPath -Parent
+    if (-not (Test-Path $eventsDir)) {
+        New-Item -ItemType Directory -Path $eventsDir | Out-Null
+    }
+
+    Write-Host "Running a3s_to_json to extract events..." -ForegroundColor Cyan
+    Push-Location $ParserRoot
+    try {
+        Write-Host "Parser command: $PythonExe $ParserScript $LibraryA3SPath $EventsJsonPath --events" -ForegroundColor DarkGray
+        & $PythonExe $ParserScript $LibraryA3SPath $EventsJsonPath --events
+    }
+    finally {
+        Pop-Location
+    }
+}
+
+function Get-EventDefinition {
+    param(
+        [Parameter(Mandatory)] [string]$EventsJsonPath,
+        [Parameter(Mandatory)] [string]$EventName
+    )
+
+    Write-Host "Loading events JSON..." -ForegroundColor Cyan
+    $eventsJson = Get-Content $EventsJsonPath -Raw | ConvertFrom-Json
+    $event = $eventsJson.events.EVENTS.PSObject.Properties.Value |
+        Where-Object { $_.name -eq $EventName } |
+        Select-Object -First 1
+
+    if (-not $event) {
+        throw "Event '$EventName' not found in $EventsJsonPath"
+    }
+
+    $mods = @($event.mods)
+    if (-not $mods -or $mods.Count -eq 0) {
+        throw "Event '$EventName' contains no mods."
+    }
+
+    Write-Host "Selected event: '$($event.name)' with $($mods.Count) mods" -ForegroundColor Yellow
+    Write-Host "Mods list:" -ForegroundColor DarkGray
+    $mods | ForEach-Object { Write-Host " - $_" -ForegroundColor DarkGray }
+
+    return [PSCustomObject]@{
+        Event = $event
+        Mods  = $mods
+    }
+}
+
+function Rebuild-ModsetLinks {
+    param(
+        [Parameter(Mandatory)] [string]$ModsetPath,
+        [Parameter(Mandatory)] [string[]]$Mods,
+        [Parameter(Mandatory)] [string]$ModLibraryPath,
+        [string]$EventName
+    )
+
+    $context = if ($EventName) { " for event '$EventName'" } else { "" }
+    Write-Host "Rebuilding modset symlinks$context..." -ForegroundColor Cyan
+
+    if (-not (Test-Path $ModsetPath)) {
+        New-Item -ItemType Directory -Path $ModsetPath | Out-Null
+    }
+
+    Get-ChildItem -Path $ModsetPath -Force | ForEach-Object {
+        $isLink = $_.Attributes -band [IO.FileAttributes]::ReparsePoint
+        if ($isLink) {
+            Write-Host "Removing existing symlink: $($_.FullName)" -ForegroundColor DarkGray
+            Remove-Item -Path $_.FullName -Force
+        } else {
+            Write-Host "Leaving non-symlink in place: $($_.FullName)" -ForegroundColor DarkGray
+        }
+    }
+
+    foreach ($mod in $Mods) {
+        $src = Join-Path $ModLibraryPath $mod
+        $dest = Join-Path $ModsetPath $mod
+        if (-not (Test-Path $src)) {
+            Write-Warning "Source mod not found: $src"
+            continue
+        }
+        Write-Host "Linking $dest -> $src" -ForegroundColor DarkGray
+        New-Item -ItemType SymbolicLink -Path $dest -Target $src | Out-Null
+    }
+}
+
+function Get-ModsetArgument {
+    param(
+        [Parameter(Mandatory)] [string]$ModsetPath
+    )
+
+    return (Get-ChildItem -Path $ModsetPath -Directory -Filter "*@*" | Select-Object -ExpandProperty FullName) -join ';'
+}
+
+function Start-ArmaServer {
+    param(
+        [Parameter(Mandatory)] [string]$ExePath,
+        [Parameter(Mandatory)] [string]$Arguments
+    )
+
+    Write-Host "Starting server with arguments:" -ForegroundColor Green
+    Write-Host $Arguments
+
+    Start-Process -FilePath "$ExePath" -ArgumentList $Arguments
+}
+
+function Show-ErrorAndExit {
+    param(
+        [Parameter(Mandatory)] [string]$Message
+    )
+
+    Write-Error $Message
+
+    try {
+        Add-Type -AssemblyName System.Windows.Forms -ErrorAction Stop
+        [System.Windows.Forms.MessageBox]::Show($Message, "Arma Startup Error", 'OK', 'Error') | Out-Null
+    } catch {
+        # If WinForms is unavailable, just rely on console error output.
+    }
+
+    exit 1
+}
+
+function Select-LatestMission {
+    param(
+        [Parameter(Mandatory)] [string]$MissionsPath,
+        [Parameter(Mandatory)] [string]$MissionPattern
+    )
+
+    $missionFile = Get-ChildItem -Path $MissionsPath -Filter $MissionPattern -ErrorAction SilentlyContinue |
+        Sort-Object { [int]([regex]::Match($_.Name, 'V(\d+)').Groups[1].Value) } -Descending |
+        Select-Object -First 1
+
+    if (-not $missionFile) {
+        throw "No mission matching pattern '$MissionPattern' found in $MissionsPath"
+    }
+
+    return [PSCustomObject]@{
+        File      = $missionFile
+        Path      = $missionFile.FullName
+        Template  = [IO.Path]::GetFileNameWithoutExtension($missionFile.Name)
+    }
+}
+
+function Update-CfgTemplate {
+    param(
+        [Parameter(Mandatory)] [string]$ConfigPath,
+        [Parameter(Mandatory)] [string]$MissionTemplate
+    )
+
+    $cfgLines = Get-Content $ConfigPath
+    $cfgLines = $cfgLines | ForEach-Object {
+        if ($_ -match '^\s*template\s*=') {
+            "        template    = ""$MissionTemplate"";"
+        } else {
+            $_
+        }
+    }
+
+    Set-Content -Path $ConfigPath -Value ($cfgLines -join "`r`n")
+}
+
+function Load-SecretsFile {
+    param(
+        [Parameter(Mandatory)] [string]$SecretsPath
+    )
+
+    $secrets = @{}
+    if (-not (Test-Path $SecretsPath)) {
+        return $secrets
+    }
+
+    foreach ($line in Get-Content -Path $SecretsPath) {
+        if (-not $line -or $line -match '^\s*#') { continue }
+        $pair = $line -split '=', 2
+        if ($pair.Count -eq 2) {
+            $key = $pair[0].Trim()
+            $value = $pair[1].Trim()
+            if ($key) {
+                $secrets[$key] = $value
+            }
+        }
+    }
+
+    return $secrets
+}
+
+function Resolve-SecretValue {
+    param(
+        [Parameter(Mandatory)] [string]$Key,
+        [Parameter()][hashtable]$Secrets,
+        [Parameter()][string]$SecretsPath,
+        [switch]$Mandatory
+    )
+
+    $envValue = [Environment]::GetEnvironmentVariable($Key)
+    if (-not [string]::IsNullOrWhiteSpace($envValue)) {
+        return $envValue
+    }
+
+    if ($Secrets -and $Secrets.ContainsKey($Key) -and -not [string]::IsNullOrWhiteSpace($Secrets[$Key])) {
+        return $Secrets[$Key]
+    }
+
+    if ($Mandatory) {
+        $locationHint = if ($SecretsPath) { $SecretsPath } else { "<path to secrets.txt>" }
+        throw "Secret '$Key' not provided. Set environment variable $Key or add it to $locationHint (see secrets.txt.sample)."
+    }
+
+    return $null
+}
