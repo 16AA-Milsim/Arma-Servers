@@ -144,8 +144,13 @@ function Rebuild-ModsetLinks {
 
     foreach ($mod in $FlatMods) {
         $normalized = $mod.ToString()
-        $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
-        $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
+        try {
+            $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
+            $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
+        } catch {
+            $detail = "Join-Path failed for mod '$mod' (type: $($mod.GetType().FullName)) with ModLibraryPath='$ModLibraryPath' ModsetPath='$ModsetPath'"
+            throw "$detail. $_"
+        }
         if (-not (Test-Path $src)) {
             Write-Warning "Source mod not found: $src"
             continue
