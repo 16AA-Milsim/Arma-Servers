@@ -98,7 +98,7 @@ function Rebuild-ModsetLinks {
         $isLink = $_.Attributes -band [IO.FileAttributes]::ReparsePoint
         if ($isLink) {
             Write-Host "Removing existing symlink: $($_.FullName)" -ForegroundColor DarkGray
-            Remove-Item -Path $_.FullName -Force
+            Remove-Item -Path $_.FullName -Force -Recurse -ErrorAction Stop
         } else {
             Write-Host "Leaving non-symlink in place: $($_.FullName)" -ForegroundColor DarkGray
         }
