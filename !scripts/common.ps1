@@ -105,8 +105,28 @@ function Rebuild-ModsetLinks {
     }
 
     foreach ($mod in $Mods) {
-        $src = Join-Path $ModLibraryPath $mod
-        $dest = Join-Path $ModsetPath $mod
+        if ($null -eq $mod) { continue }
+
+        if ($mod -is [System.Collections.IEnumerable] -and -not ($mod -is [string])) {
+            foreach ($inner in $mod) {
+                if ($inner) {
+                    $normalized = $inner.ToString()
+                    $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
+                    $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
+                    if (-not (Test-Path $src)) {
+                        Write-Warning "Source mod not found: $src"
+                        continue
+                    }
+                    Write-Host "Linking $dest -> $src" -ForegroundColor DarkGray
+                    New-Item -ItemType SymbolicLink -Path $dest -Target $src | Out-Null
+                }
+            }
+            continue
+        }
+
+        $normalized = $mod.ToString()
+        $src = Join-Path -Path $ModLibraryPath -ChildPath $normalized
+        $dest = Join-Path -Path $ModsetPath -ChildPath $normalized
         if (-not (Test-Path $src)) {
             Write-Warning "Source mod not found: $src"
             continue
