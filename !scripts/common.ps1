@@ -313,10 +313,10 @@ function Resolve-ConnectPassword {
     )
 
     $Candidates = @(
-        Join-Path -Path $ParentPath -ChildPath "configs\passwords.hpp",
-        Join-Path -Path $ParentPath -ChildPath "configs\passwords_main.hpp",
-        Join-Path -Path $ParentPath -ChildPath "configs\passwords_testing.hpp",
-        Join-Path -Path $ParentPath -ChildPath "configs\passwords_training.hpp"
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords.hpp" -ErrorAction Stop
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_main.hpp" -ErrorAction Stop
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_testing.hpp" -ErrorAction Stop
+        Join-Path -Path $ParentPath -ChildPath "configs\passwords_training.hpp" -ErrorAction Stop
     )
 
     foreach ($cfg in $Candidates) {
