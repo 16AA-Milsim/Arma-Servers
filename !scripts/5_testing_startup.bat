@@ -26,3 +26,9 @@ set SCRIPT=%~dp0testing.ps1
 
 echo Testing server requires UDP ports 2442-2446 free (base port 2442).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)

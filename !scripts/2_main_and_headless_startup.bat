@@ -28,11 +28,29 @@ set SCRIPT_HC2=%~dp0hc2.ps1
 echo Starting main server...
 echo Main server requires UDP ports 2302-2306 free (base port 2302).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_MAIN%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)
 timeout /t 2 /nobreak >nul
 
 echo Starting headless client 1...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_HC1%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)
 timeout /t 5 /nobreak >nul
 
 echo Starting headless client 2...
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_HC2%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)

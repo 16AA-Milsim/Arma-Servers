@@ -26,3 +26,9 @@ set SCRIPT=%~dp0main.ps1
 
 echo Main server requires UDP ports 2302-2306 free (base port 2302).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)

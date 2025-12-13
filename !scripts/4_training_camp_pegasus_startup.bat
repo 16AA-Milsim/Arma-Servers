@@ -26,3 +26,9 @@ set SCRIPT=%~dp0training_camp_pegasus.ps1
 
 echo Training (Camp Pegasus) requires UDP ports 2402-2406 free (base port 2402).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
+if errorlevel 1 (
+    echo.
+    echo Startup failed. See the error output above.
+    pause
+    exit /b 1
+)
