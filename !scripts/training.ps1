@@ -36,9 +36,7 @@ try {
 $ParserScript = Join-Path -Path $CommonPaths.ParserRoot -ChildPath "Parser.py"
 $PythonExe    = Get-ParserPython -ParserRoot $CommonPaths.ParserRoot
 
-Invoke-EventParser -ParserRoot $CommonPaths.ParserRoot -ParserScript $ParserScript -LibraryA3SPath $CommonPaths.LibraryA3SPath -EventsJsonPath $CommonPaths.EventsJsonPath -PythonExe $PythonExe
-
-    $eventInfo = Get-EventDefinition -EventsJsonPath $CommonPaths.EventsJsonPath -EventName $EventName
+    $eventInfo = Update-EventsAndGetDefinition -ParserRoot $CommonPaths.ParserRoot -ParserScript $ParserScript -LibraryA3SPath $CommonPaths.LibraryA3SPath -EventsJsonPath $CommonPaths.EventsJsonPath -PythonExe $PythonExe -EventName $EventName
     Rebuild-ModsetLinks -ModsetPath $ModsetPath -Mods $eventInfo.Mods -ModLibraryPath $CommonPaths.ModLibraryPath -EventName $EventName
 
     $Mods = Get-ModsetArgument -ModsetPath $ModsetPath

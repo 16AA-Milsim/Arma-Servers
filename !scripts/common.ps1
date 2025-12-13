@@ -9,6 +9,33 @@ $CommonPaths = @{
     ParserRoot     = "F:\16AA\zOther\a3s_to_json"
 }
 
+$EventParserMutexName = "Global\16AA-Arma-Servers-EventsJson"
+
+function Invoke-WithMutex {
+    param(
+        [Parameter(Mandatory)] [string]$Name,
+        [Parameter(Mandatory)] [scriptblock]$ScriptBlock
+    )
+
+    $mutex = New-Object System.Threading.Mutex($false, $Name)
+    $lockTaken = $false
+    try {
+        $lockTaken = $mutex.WaitOne(0)
+        if (-not $lockTaken) {
+            Write-Host "Another startup is updating events.json; waiting for lock..." -ForegroundColor Yellow
+            $lockTaken = $mutex.WaitOne()
+        }
+
+        & $ScriptBlock
+    }
+    finally {
+        if ($lockTaken) {
+            try { $mutex.ReleaseMutex() } catch { }
+        }
+        $mutex.Dispose()
+    }
+}
+
 function Get-ParserPython {
     param(
         [Parameter(Mandatory)]
@@ -45,6 +72,22 @@ function Invoke-EventParser {
     }
     finally {
         Pop-Location
+    }
+}
+
+function Update-EventsAndGetDefinition {
+    param(
+        [Parameter(Mandatory)] [string]$ParserRoot,
+        [Parameter(Mandatory)] [string]$ParserScript,
+        [Parameter(Mandatory)] [string]$LibraryA3SPath,
+        [Parameter(Mandatory)] [string]$EventsJsonPath,
+        [Parameter(Mandatory)] [string]$PythonExe,
+        [Parameter(Mandatory)] [string]$EventName
+    )
+
+    return Invoke-WithMutex -Name $EventParserMutexName -ScriptBlock {
+        Invoke-EventParser -ParserRoot $ParserRoot -ParserScript $ParserScript -LibraryA3SPath $LibraryA3SPath -EventsJsonPath $EventsJsonPath -PythonExe $PythonExe
+        Get-EventDefinition -EventsJsonPath $EventsJsonPath -EventName $EventName
     }
 }
 
