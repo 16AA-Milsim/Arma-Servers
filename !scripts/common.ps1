@@ -247,10 +247,10 @@ function Get-UdpPortUsage {
             $port = [int]$m.Groups[2].Value
             if ($uniquePorts -notcontains $port) { continue }
 
-            $pid = [int]$m.Groups[3].Value
+            $processId = [int]$m.Groups[3].Value
             $processName = $null
             try {
-                $processName = (Get-Process -Id $pid -ErrorAction Stop).ProcessName
+                $processName = (Get-Process -Id $processId -ErrorAction Stop).ProcessName
             }
             catch {
                 $processName = "<unknown>"
@@ -259,7 +259,7 @@ function Get-UdpPortUsage {
             $results.Add([PSCustomObject]@{
                 Port          = $port
                 LocalAddress  = $m.Groups[1].Value
-                OwningProcess = $pid
+                OwningProcess = $processId
                 ProcessName   = $processName
             })
         }
