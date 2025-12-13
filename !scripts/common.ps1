@@ -346,11 +346,29 @@ function Show-ErrorAndExit {
 
     Write-Error $fullMessage
 
+    $shown = $false
     try {
         Add-Type -AssemblyName System.Windows.Forms -ErrorAction Stop
         [System.Windows.Forms.MessageBox]::Show($fullMessage, "Arma Startup Error", 'OK', 'Error') | Out-Null
-    } catch {
-        # If WinForms is unavailable, just rely on console error output.
+        $shown = $true
+    } catch { }
+
+    if (-not $shown) {
+        try {
+            Add-Type -AssemblyName PresentationFramework -ErrorAction Stop
+            [System.Windows.MessageBox]::Show($fullMessage, "Arma Startup Error", 'OK', 'Error') | Out-Null
+            $shown = $true
+        } catch { }
+    }
+
+    if (-not $shown) {
+        try {
+            # Most reliable fallback: works even when WinForms/WPF assemblies aren't available.
+            $wsh = New-Object -ComObject WScript.Shell
+            # 0 = wait indefinitely, 0x10 = critical icon
+            [void]$wsh.Popup($fullMessage, 0, "Arma Startup Error", 0x10)
+            $shown = $true
+        } catch { }
     }
 
     exit 1
