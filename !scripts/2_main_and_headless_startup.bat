@@ -26,6 +26,7 @@ set SCRIPT_HC1=%~dp0hc1.ps1
 set SCRIPT_HC2=%~dp0hc2.ps1
 
 echo Starting main server...
+echo Main server requires UDP ports 2302-2306 free (base port 2302).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT_MAIN%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
 timeout /t 2 /nobreak >nul
 

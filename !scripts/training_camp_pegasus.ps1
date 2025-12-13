@@ -52,6 +52,7 @@ try {
     $ServerMods = "$OcapPath"
     $Arguments = "-config=$ConfigPath -cfg=$NetworkConfigPath -profiles=$ProfilesPath -port=$Port -name=16aa -filePatching -hugepages -maxMem=16000 -malloc=mimalloc_v206_LockPages -enableHT -bandwidthAlg=2 -limitFPS=1000 -loadMissionToMemory -autoInit -servermod=$ServerMods -mod=$Mods -mission=""$($mission.Path)"""
 
+    Assert-ArmaServerPortsFree -BasePort $Port -Label "training camp pegasus (-port=$Port)"
     Start-ArmaServer -ExePath $ExePath -Arguments $Arguments
 }
 catch {

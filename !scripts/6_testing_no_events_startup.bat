@@ -18,4 +18,5 @@ if "%MODSET%"=="" (
 
 set SCRIPT=%~dp0testing_no_events.ps1
 
+echo Testing server (no events) requires UDP ports 2442-2446 free (base port 2442).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -ModsetPath "%MODSET%"

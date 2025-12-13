@@ -24,4 +24,5 @@ if "%MODSET%"=="" (
 rem Run the Arma startup script
 set SCRIPT=%~dp0main.ps1
 
+echo Main server requires UDP ports 2302-2306 free (base port 2302).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"

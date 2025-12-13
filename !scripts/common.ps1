@@ -229,16 +229,126 @@ function Start-ArmaServer {
     Start-Process -FilePath "$ExePath" -ArgumentList $Arguments
 }
 
+function Get-UdpPortUsage {
+    param(
+        [Parameter(Mandatory)] [int[]]$Ports
+    )
+
+    $results = New-Object System.Collections.Generic.List[object]
+    $uniquePorts = @($Ports | Sort-Object -Unique)
+
+    $hasNetCmdlet = $null -ne (Get-Command Get-NetUDPEndpoint -ErrorAction SilentlyContinue)
+    if (-not $hasNetCmdlet) {
+        $netstat = & netstat -ano -p udp 2>$null
+        foreach ($line in $netstat) {
+            $m = [regex]::Match($line, '^\s*UDP\s+(\S+):(\d+)\s+\*\:\*\s+(\d+)\s*$')
+            if (-not $m.Success) { continue }
+
+            $port = [int]$m.Groups[2].Value
+            if ($uniquePorts -notcontains $port) { continue }
+
+            $pid = [int]$m.Groups[3].Value
+            $processName = $null
+            try {
+                $processName = (Get-Process -Id $pid -ErrorAction Stop).ProcessName
+            }
+            catch {
+                $processName = "<unknown>"
+            }
+
+            $results.Add([PSCustomObject]@{
+                Port          = $port
+                LocalAddress  = $m.Groups[1].Value
+                OwningProcess = $pid
+                ProcessName   = $processName
+            })
+        }
+
+        return $results
+    }
+
+    foreach ($port in $uniquePorts) {
+        try {
+            $endpoints = Get-NetUDPEndpoint -LocalPort $port -ErrorAction Stop
+        }
+        catch {
+            continue
+        }
+
+        foreach ($ep in $endpoints) {
+            $processName = $null
+            try {
+                $processName = (Get-Process -Id $ep.OwningProcess -ErrorAction Stop).ProcessName
+            }
+            catch {
+                $processName = "<unknown>"
+            }
+
+            $results.Add([PSCustomObject]@{
+                Port          = $port
+                LocalAddress  = $ep.LocalAddress
+                OwningProcess = $ep.OwningProcess
+                ProcessName   = $processName
+            })
+        }
+    }
+
+    return $results
+}
+
+function Assert-UdpPortsFree {
+    param(
+        [Parameter(Mandatory)] [int[]]$Ports,
+        [string]$Label
+    )
+
+    $usage = Get-UdpPortUsage -Ports $Ports
+    if (-not $usage -or $usage.Count -eq 0) {
+        return
+    }
+
+    $title = if ($Label) { "Port check failed ($Label)" } else { "Port check failed" }
+    $usedPorts = ($usage | Sort-Object Port | Select-Object -ExpandProperty Port -Unique) -join ", "
+
+    $details = $usage |
+        Sort-Object Port, OwningProcess |
+        ForEach-Object { " - UDP $($_.LocalAddress):$($_.Port) (PID $($_.OwningProcess): $($_.ProcessName))" }
+
+    throw ($title + ": required UDP port(s) are already in use: $usedPorts`r`n" + ($details -join "`r`n"))
+}
+
+function Assert-ArmaServerPortsFree {
+    param(
+        [Parameter(Mandatory)] [int]$BasePort,
+        [string]$Label
+    )
+
+    # Arma 3 dedicated server uses the game port plus several adjacent UDP ports
+    # (Steam query/communication + BattlEye). When any are occupied, Arma will
+    # silently shift the base port to a higher free range.
+    $portsToCheck = @($BasePort, ($BasePort + 1), ($BasePort + 2), ($BasePort + 3), ($BasePort + 4))
+    Assert-UdpPortsFree -Ports $portsToCheck -Label $Label
+}
+
 function Show-ErrorAndExit {
     param(
         [Parameter(Mandatory)] [string]$Message
     )
 
-    Write-Error $Message
+    $hint = @(
+        "",
+        "Troubleshooting:",
+        " - Check Task Manager for stuck Arma processes and close them (e.g. arma3server_x64.exe / arma3serverprofiling_x64.exe).",
+        " - If this is a port error, make sure the required UDP port range is free before starting."
+    ) -join "`r`n"
+
+    $fullMessage = $Message + $hint
+
+    Write-Error $fullMessage
 
     try {
         Add-Type -AssemblyName System.Windows.Forms -ErrorAction Stop
-        [System.Windows.Forms.MessageBox]::Show($Message, "Arma Startup Error", 'OK', 'Error') | Out-Null
+        [System.Windows.Forms.MessageBox]::Show($fullMessage, "Arma Startup Error", 'OK', 'Error') | Out-Null
     } catch {
         # If WinForms is unavailable, just rely on console error output.
     }

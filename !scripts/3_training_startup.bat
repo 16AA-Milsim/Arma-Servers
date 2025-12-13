@@ -24,4 +24,5 @@ if "%MODSET%"=="" (
 rem Run the Arma startup script
 set SCRIPT=%~dp0training.ps1
 
+echo Training server requires UDP ports 2402-2406 free (base port 2402).
 powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
