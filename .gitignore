@@ -11,6 +11,7 @@ dll/*
 !/!scripts/
 !/!scripts/**
 /!scripts/secrets.txt
+/!scripts/config/secrets.txt
 !/!scripts_OLD_BACKUP/
 !/!scripts_OLD_BACKUP/**
 !/modpacks/
