@@ -1,34 +1,12 @@
 @echo off
 setlocal
 
-rem Define the event name and modset used by the PS1 (required)
+rem Starts the MAIN server using the XMAS event preset.
+rem Edit EVENT/MODSET if you want to start a different preset/modset folder.
 set "EVENT=03 - 16AA XMAS"
 set "MODSET=modpacks\server-main"
 
-rem Self-elevate if not admin
-net session >nul 2>&1
-if %errorlevel% neq 0 (
-    powershell -NoProfile -Command "Start-Process '%~f0' -Verb RunAs"
-    exit /b
-)
-
-if "%EVENT%"=="" (
-    echo EVENT environment variable not set. Please set EVENT before running this launcher.
-    exit /b 1
-)
-if "%MODSET%"=="" (
-    echo MODSET environment variable not set. Please set MODSET before running this launcher.
-    exit /b 1
-)
-
-rem Run the Arma startup script
-set SCRIPT=%~dp0main.ps1
-
+rem Ports are validated; startup fails if the required UDP port range is in use.
 echo Main server requires UDP ports 2302-2306 free (base port 2302).
-powershell -NoProfile -ExecutionPolicy Bypass -File "%SCRIPT%" -EventName "%EVENT%" -ModsetPath "%MODSET%"
-if errorlevel 1 (
-    echo.
-    echo Startup failed. See the error output above.
-    pause
-    exit /b 1
-)
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0ps\script_launcher.ps1" -Action start-server -EventName "%EVENT%" -ModsetPath "%MODSET%" -Port 2302 -ExePath "server_main\arma3serverprofiling_x64.exe" -ConfigPath "configs\main.cfg" -ProfilesPath "logs_main" -NetworkConfigPath "configs\network.cfg" -ServerModsPath "servermods\@OCAP" -Label "main server (-port=2302)"
+exit /b %errorlevel%
