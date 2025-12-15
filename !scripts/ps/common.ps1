@@ -408,14 +408,14 @@ function Update-ModsetSymlinks {
     )
 
     $context = if ($EventName) { " for event '$EventName'" } else { "" }
-    Write-Host "Rebuilding modset symlinks$context..." -ForegroundColor Cyan
+    Write-Host "Ensuring modset symlinks are up to date$context..." -ForegroundColor Cyan
 
     if (-not (Test-Path $ModsetPath)) {
         New-Item -ItemType Directory -Path $ModsetPath | Out-Null
     }
 
     $FlatMods = ConvertTo-FlatModList -Mods $Mods
-    Write-Host ("Mods to link ({0}):" -f $FlatMods.Count) -ForegroundColor DarkGray
+    Write-Host ("Requested mod list ({0}):" -f $FlatMods.Count) -ForegroundColor DarkGray
     $FlatMods | ForEach-Object { Write-Host " - $_" -ForegroundColor DarkGray }
 
     $hash = Get-ModListHash -Mods $FlatMods
@@ -434,10 +434,11 @@ function Update-ModsetSymlinks {
 
     $cacheHit = $cache -and $cache.hash -and ($cache.hash -eq $hash)
     if ($cacheHit -and (Test-ModsetLinksMatch -ModsetPath $ModsetPath -ExpectedMods $FlatMods -ModLibraryPath $ModLibraryPath)) {
-        Write-Host ("Modset is already up to date (hash {0}); skipping relink." -f $hash) -ForegroundColor Cyan
+        Write-Host ("Modset is already up to date (hash {0}); symlinks match; skipping relink." -f $hash) -ForegroundColor Cyan
         return
     }
 
+    Write-Host "Relinking modset symlinks..." -ForegroundColor Cyan
     Remove-SymlinkChildren -Path $ModsetPath -RemovePrefix "Removing existing symlink:" -KeepPrefix "Leaving non-symlink in place:"
 
     foreach ($mod in $FlatMods) {
