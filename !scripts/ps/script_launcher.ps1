@@ -57,11 +57,20 @@ function Wait-ExitKeypress {
     )
 
     try {
-        if ($Host -and $Host.Name -eq "ConsoleHost" -and $Host.UI -and $Host.UI.RawUI) {
-            Write-Host ""
-            Write-Host $Prompt -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host $Prompt -ForegroundColor Yellow
+
+        if ($Host -and $Host.UI -and $Host.UI.RawUI) {
             [void]$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            return
         }
+
+        try {
+            [void][Console]::ReadKey($true)
+            return
+        } catch { }
+
+        [void](Read-Host)
     } catch { }
 }
 

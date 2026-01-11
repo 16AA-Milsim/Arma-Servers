@@ -49,11 +49,20 @@ function Wait-StartupExitKeypress {
     )
 
     try {
-        if ($Host -and $Host.Name -eq "ConsoleHost" -and $Host.UI -and $Host.UI.RawUI) {
-            Write-Host ""
-            Write-Host $Prompt -ForegroundColor Yellow
+        Write-Host ""
+        Write-Host $Prompt -ForegroundColor Yellow
+
+        if ($Host -and $Host.UI -and $Host.UI.RawUI) {
             [void]$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+            return
         }
+
+        try {
+            [void][Console]::ReadKey($true)
+            return
+        } catch { }
+
+        [void](Read-Host)
     } catch { }
 }
 
@@ -487,11 +496,16 @@ function Start-ArmaServer {
     Write-Host "Starting server with arguments:" -ForegroundColor Green
     Write-Host $Arguments
 
-    # Launch via cmd.exe so we can keep the console open on failure (double-clicked .bat windows otherwise close immediately).
-    # - On success (exit code 0): the window closes when the server stops.
-    # - On failure (non-zero): the window pauses so the error output remains visible.
-    $cmdLine = '""{0}" {1} || (echo. & echo Process exited with code !errorlevel! & pause)"' -f $ExePath, $Arguments
-    Start-Process -FilePath "cmd.exe" -ArgumentList @("/v:on", "/c", $cmdLine)
+    $workingDirectory = Split-Path -Path $ExePath -Parent
+
+    # Attach the Arma process to the current console so its output is visible when launched from a .bat (even via double-click).
+    $process = Start-Process -FilePath $ExePath -ArgumentList $Arguments -WorkingDirectory $workingDirectory -NoNewWindow -PassThru
+
+    # If Arma exits immediately with a non-zero code, keep the console open so the error/output can be read.
+    Start-Sleep -Milliseconds 400
+    if ($process -and $process.HasExited -and $process.ExitCode -ne 0) {
+        Show-ErrorAndExit ("Process exited immediately (code {0})." -f $process.ExitCode)
+    }
 }
 
 # Returns UDP port usage information (Get-NetUDPEndpoint when available, otherwise netstat).
