@@ -627,7 +627,8 @@ function Show-ErrorAndExit {
 
     $fullMessage = $Message + $hint
 
-    Write-Error $fullMessage
+    # Use non-terminating error output so we can always show UI/pause even under $ErrorActionPreference='Stop'.
+    Write-Error $fullMessage -ErrorAction Continue
 
     $shown = $false
     try {
@@ -654,7 +655,10 @@ function Show-ErrorAndExit {
         } catch { }
     }
 
-    Wait-StartupExitKeypress
+    # Prefer a tidy popup-only flow; only fall back to console pause when we cannot show UI.
+    if (-not $shown) {
+        Wait-StartupExitKeypress
+    }
     exit 1
 }
 

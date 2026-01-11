@@ -51,28 +51,9 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-function Wait-ExitKeypress {
-    param(
-        [string]$Prompt = "Press any key to close..."
-    )
-
-    try {
-        Write-Host ""
-        Write-Host $Prompt -ForegroundColor Yellow
-
-        if ($Host -and $Host.UI -and $Host.UI.RawUI) {
-            [void]$Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
-            return
-        }
-
-        try {
-            [void][Console]::ReadKey($true)
-            return
-        } catch { }
-
-        [void](Read-Host)
-    } catch { }
-}
+$ScriptRoot = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
+# Import shared helpers (includes popup error UI).
+. (Join-Path $ScriptRoot 'common.ps1')
 
 function Test-IsAdmin {
     $currentIdentity = [Security.Principal.WindowsIdentity]::GetCurrent()
@@ -115,13 +96,9 @@ if (-not (Test-IsAdmin)) {
         exit $p.ExitCode
     }
     catch {
-        Write-Error $_.Exception.Message
-        Wait-ExitKeypress -Prompt "Unable to start elevated process. Press any key to close..."
-        exit 1
+        Show-ErrorAndExit ("Unable to start elevated process: {0}" -f $_.Exception.Message)
     }
 }
-
-$ScriptRoot = Split-Path -Path $MyInvocation.MyCommand.Path -Parent
 
 try {
     # Reset the warning flag for this run (common.ps1 sets this when a warning should pause before exit).
@@ -186,7 +163,5 @@ try {
     exit $exitCode
 }
 catch {
-    Write-Error $_.Exception.Message
-    Wait-ExitKeypress
-    exit 1
+    Show-ErrorAndExit $_.Exception.Message
 }
