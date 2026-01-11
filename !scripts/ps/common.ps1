@@ -487,7 +487,11 @@ function Start-ArmaServer {
     Write-Host "Starting server with arguments:" -ForegroundColor Green
     Write-Host $Arguments
 
-    Start-Process -FilePath "$ExePath" -ArgumentList $Arguments
+    # Launch via cmd.exe so we can keep the console open on failure (double-clicked .bat windows otherwise close immediately).
+    # - On success (exit code 0): the window closes when the server stops.
+    # - On failure (non-zero): the window pauses so the error output remains visible.
+    $cmdLine = '""{0}" {1} || (echo. & echo Process exited with code !errorlevel! & pause)"' -f $ExePath, $Arguments
+    Start-Process -FilePath "cmd.exe" -ArgumentList @("/v:on", "/c", $cmdLine)
 }
 
 # Returns UDP port usage information (Get-NetUDPEndpoint when available, otherwise netstat).
