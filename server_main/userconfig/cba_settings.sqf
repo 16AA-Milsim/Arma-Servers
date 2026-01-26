@@ -918,9 +918,9 @@ force force ace_zeus_zeusAscension = false;
 force force ace_zeus_zeusBird = false;
 
 // ACM: Airway
-force force ACM_airway_airwayCollapseChance = 0.5;
-force force ACM_airway_airwayObstructionBloodChance = 0;
-force force ACM_airway_airwayObstructionVomitChance = 0;
+force force ACM_airway_airwayCollapseChance = 1;
+force force ACM_airway_airwayObstructionBloodChance = 1;
+force force ACM_airway_airwayObstructionVomitChance = 1;
 force force ACM_airway_allowACCUVAC = 1;
 force force ACM_airway_allowNPA = 0;
 force force ACM_airway_allowOPA = 0;
@@ -944,7 +944,7 @@ force force ACM_breathing_Hardcore_HemothoraxBleeding = false;
 force force ACM_breathing_hemothoraxChance = 0.2;
 force force ACM_breathing_locationThoracostomy = 0;
 force force ACM_breathing_pneumothoraxDeteriorateChance = 1;
-force force ACM_breathing_pneumothoraxEnabled = false;
+force force ACM_breathing_pneumothoraxEnabled = true;
 force force ACM_breathing_showCyanosisSeverity = true;
 force force ACM_breathing_treatmentTimeInspectChest = 6;
 
