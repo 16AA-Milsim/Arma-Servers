@@ -129,7 +129,10 @@ activeKeys[]=
 	"BIS_[16AA-OPR]Kingslayer_III.tem_anizay_done",
 	"BIS_[16AA-OPR]KingslayerIV_v3.Farabad_done",
 	"BIS_[16AA-OPR]KingslayerV.Farabad_done",
-	"BIS_[16AA-OPR]Kingslayer_VI.Farabad_done"
+	"BIS_[16AA-OPR]Kingslayer_VI.Farabad_done",
+	"BIS_[16AA-CRIMBO]Edelweiss_III.SWU_Aachen_Outskirts_done",
+	"BIS_[16AA-CRIMBO]Edelweiss_IV.PLR_Bulge_done",
+	"BIS_[16AA-CRIMBO]Edelweiss_V.MCN_Neaville_done"
 };
 sceneComplexity=400000;
 shadowZDistance=100;
