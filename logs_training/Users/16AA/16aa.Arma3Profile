@@ -45,7 +45,9 @@ activeKeys[]=
 	"BIS_[16AA-TRN]PhoenixStorm_V3.Altis_done",
 	"BIS_[16AA-TRN]PhoenixStorm_HR2_v2.Altis_done",
 	"BIS_[16AA-TRN]PhoenixStorm_HR3_v1.Altis_done",
-	"BIS_[16AA-TRN]7RHA-Training.Altis_done"
+	"BIS_[16AA-TRN]7RHA-Training.Altis_done",
+	"BIS_[16AA]Universal_Training_Grounds_V130.cfb_moosehead_done",
+	"BIS_[16AA]Universal_Training_Grounds_V133.cfb_moosehead_done"
 };
 playedKeys[]=
 {

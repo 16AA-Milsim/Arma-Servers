@@ -15,6 +15,7 @@ param(
     [string]$ModsetPath,
 
     [switch]$SkipEvents,
+    [switch]$UseExistingModset,
 
     [Parameter(Mandatory)]
     [int]$Port,
@@ -95,13 +96,20 @@ try {
         $ServerModsPath = Resolve-RelativePath -Path $ServerModsPath -BasePath $RepoRoot
     }
 
-    if ($SkipEvents) {
+    if ($SkipEvents -and $UseExistingModset) {
+        throw "SkipEvents and UseExistingModset cannot be used together."
+    }
+
+    if ($UseExistingModset) {
+        # Do not mutate MODSET at all; launch with its current contents (symlinks and/or real folders).
+        Write-Host "Using existing modset contents as-is (no event parsing, no symlink updates): $ModsetPath" -ForegroundColor Cyan
+    } elseif ($SkipEvents) {
         # Skip event parsing and start with whatever mod folders are currently in the modset.
         Clear-ModsetSymlinks -ModsetPath $ModsetPath
     } else {
         # Parse event definition and rebuild modset symlinks to match it.
         if ([string]::IsNullOrWhiteSpace($EventName)) {
-            throw "EventName not provided. Ensure the BAT launcher sets and passes EVENT (or use -SkipEvents)."
+            throw "EventName not provided. Ensure the BAT launcher sets and passes EVENT (or use -SkipEvents / -UseExistingModset)."
         }
 
         $ParserScript = Join-Path -Path $CommonPaths.ParserRoot -ChildPath "Parser.py"

@@ -23,6 +23,7 @@ param(
     [string]$ModsetPath,
 
     [switch]$SkipEvents,
+    [switch]$UseExistingModset,
 
     [int]$Port,
 
@@ -83,6 +84,9 @@ if (-not (Test-IsAdmin)) {
         if ($SkipEvents) {
             $argList += "-SkipEvents"
         }
+        if ($UseExistingModset) {
+            $argList += "-UseExistingModset"
+        }
         foreach ($k in @("Port", "ExePath", "ConfigPath", "ProfilesPath", "NetworkConfigPath", "ServerModsPath", "ServerName", "Label", "MissionsPath", "MissionPattern", "ExtraArgs")) {
             if ($PSBoundParameters.ContainsKey($k)) {
                 $argList += @("-$k", (Get-Variable -Name $k -ValueOnly))
@@ -109,7 +113,8 @@ try {
         "start-server" {
             # Dedicated server startup is fully parameter-driven; the BAT provides all server-specific values.
             if ([string]::IsNullOrWhiteSpace($ModsetPath)) { throw "ModsetPath is required for Action=start-server." }
-            if (-not $SkipEvents -and [string]::IsNullOrWhiteSpace($EventName)) { throw "EventName is required for Action=start-server unless -SkipEvents is set." }
+            if ($SkipEvents -and $UseExistingModset) { throw "SkipEvents and UseExistingModset cannot be used together." }
+            if (-not $SkipEvents -and -not $UseExistingModset -and [string]::IsNullOrWhiteSpace($EventName)) { throw "EventName is required for Action=start-server unless -SkipEvents or -UseExistingModset is set." }
             if (-not $PSBoundParameters.ContainsKey("Port")) { throw "Port is required for Action=start-server." }
             if ([string]::IsNullOrWhiteSpace($ExePath)) { throw "ExePath is required for Action=start-server." }
             if ([string]::IsNullOrWhiteSpace($ConfigPath)) { throw "ConfigPath is required for Action=start-server." }
@@ -119,6 +124,7 @@ try {
                 EventName     = $EventName
                 ModsetPath    = $ModsetPath
                 SkipEvents    = $SkipEvents
+                UseExistingModset = $UseExistingModset
                 Port          = $Port
                 ExePath       = $ExePath
                 ConfigPath    = $ConfigPath
@@ -157,7 +163,7 @@ try {
 
     # If warnings were emitted via Write-StartupWarning, pause so the console doesn't immediately close.
     if ($global:ArmaStartupHadWarnings) {
-        Wait-ExitKeypress -Prompt "Warnings were reported. Press any key to close..."
+        Wait-StartupExitKeypress -Prompt "Warnings were reported. Press any key to close..."
     }
 
     exit $exitCode

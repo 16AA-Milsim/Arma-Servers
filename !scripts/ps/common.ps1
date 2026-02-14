@@ -127,6 +127,11 @@ function Invoke-EventParser {
     try {
         Write-Host "Parser command: $PythonExe $ParserScript $LibraryA3SPath $EventsJsonPath --events" -ForegroundColor DarkGray
         & $PythonExe $ParserScript $LibraryA3SPath $EventsJsonPath --events
+
+        $parserExitCode = $LASTEXITCODE
+        if ($parserExitCode -ne 0) {
+            throw "Event parser failed with exit code $parserExitCode. events.json was not refreshed."
+        }
     }
     finally {
         Pop-Location
@@ -466,7 +471,7 @@ function Update-ModsetSymlinks {
         if (Test-Path $dest) {
             $isLink = (Get-Item $dest -ErrorAction SilentlyContinue).Attributes -band [IO.FileAttributes]::ReparsePoint
             if (-not $isLink) {
-                Write-StartupWarning "Destination exists and is not a symlink, skipping: $dest"
+                Write-Host "Info: destination exists as a real folder, keeping it and skipping symlink: $dest" -ForegroundColor Yellow
                 continue
             }
         }

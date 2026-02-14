@@ -8,7 +8,8 @@ if %errorlevel% neq 0 (
     exit /b
 )
 
-rem Starts the TESTING Arma dedicated server (event-driven modset).
+rem Starts the TESTING Arma dedicated server (event-driven modset relink).
+rem Only symlink entries in MODSET are updated to match EVENT. Existing real folders inside MODSET are kept in place.
 rem Edit EVENT/MODSET if you want to start a different preset/modset folder.
 set "EVENT=01 - 16AA MAIN"
 set "MODSET=modpacks\server-testing"
