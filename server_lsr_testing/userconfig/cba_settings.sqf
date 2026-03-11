@@ -556,8 +556,8 @@ force force ace_medical_ivFlowRate = 1;
 force force ace_medical_limbDamageThreshold = 5;
 force force ace_medical_limping = 1;
 force force ace_medical_painCoefficient = 1;
-force force ace_medical_painUnconsciousChance = 0.5;
-force force ace_medical_painUnconsciousThreshold = 0.45;
+force force ace_medical_painUnconsciousChance = 0.25;
+force force ace_medical_painUnconsciousThreshold = 0.5;
 force force ace_medical_playerDamageThreshold = 1;
 force force ace_medical_spontaneousWakeUpChance = 0.05;
 force force ace_medical_spontaneousWakeUpEpinephrineBoost = 1;
@@ -660,7 +660,7 @@ force force ace_medical_treatment_treatmentTimeTrainedAutoinjector = 5;
 force force ace_medical_treatment_treatmentTimeTrainedIV = 8;
 force force ace_medical_treatment_treatmentTimeTrainedSplint = 7;
 force force ace_medical_treatment_treatmentTimeTrainedTourniquet = 5;
-force force ace_medical_treatment_woundReopenChance = 0.9;
+force force ace_medical_treatment_woundReopenChance = 1;
 force force ace_medical_treatment_woundStitchTime = 5;
 
 // ACE Name Tags
@@ -1004,6 +1004,7 @@ force force ACM_core_MedicAI_AllowIntermediateTreatment = false;
 force force ACM_core_treatmentTimeSutureStitch = 0.5;
 force force ACM_core_treatmentTimeTakeOffTourniquet = 4;
 force force ACM_core_treatmentTimeWrappedStitch = 2;
+force force ACM_core_wrappedWoundReopenChance = 1.2;
 
 // ACM: Damage
 force force ACM_damage_AIStayDownChance = 1;
