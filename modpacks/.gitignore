@@ -12,6 +12,8 @@
 !/server-main/.gitkeep
 /server-training/*
 !/server-training/.gitkeep
+/server-training-fst-temporary/*
+!/server-training-fst-temporary/.gitkeep
 /server-testing/*
 !/server-testing/.gitkeep
 /library/*
